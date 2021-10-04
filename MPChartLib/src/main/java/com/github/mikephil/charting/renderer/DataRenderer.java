@@ -144,7 +144,7 @@ public abstract class DataRenderer extends Renderer
 		mValuePaint.setColor(color);
 		if(value % 1 > 0.0)
 		{
-			w = mValuePaint.measureText(String.valueOf(value))/1.5f;
+			w = mValuePaint.measureText(String.valueOf(value))/1.3f;
 		}
 		else
 		{
