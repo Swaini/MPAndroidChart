@@ -140,8 +140,13 @@ public abstract class DataRenderer extends Renderer
 	 */
 	public void drawValue(Canvas c, IValueFormatter formatter, float value, Entry entry, int dataSetIndex, float x, float y, int color)
 	{
+		float w=0;
 		mValuePaint.setColor(color);
-		float w = mValuePaint.measureText(String.valueOf(value)) / 2;
+		if(value%1>0.0){
+			w = mValuePaint.measureText(String.valueOf(value));
+		}else{
+			w = mValuePaint.measureText(String.valueOf(value)) / 2;
+		}
 		float textSize = mValuePaint.getTextSize();
 		
 		int margin = (int)(textSize / 4);
