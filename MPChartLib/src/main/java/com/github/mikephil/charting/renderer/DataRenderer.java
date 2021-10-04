@@ -142,9 +142,12 @@ public abstract class DataRenderer extends Renderer
 	{
 		float w=0;
 		mValuePaint.setColor(color);
-		if(value%1>0.0){
-			w = mValuePaint.measureText(String.valueOf(value));
-		}else{
+		if(value % 1 > 0.0)
+		{
+			w = mValuePaint.measureText(String.valueOf(value))/1.5f;
+		}
+		else
+		{
 			w = mValuePaint.measureText(String.valueOf(value)) / 2;
 		}
 		float textSize = mValuePaint.getTextSize();
