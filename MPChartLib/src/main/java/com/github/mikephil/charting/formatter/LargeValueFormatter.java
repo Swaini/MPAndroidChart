@@ -46,8 +46,13 @@ public class LargeValueFormatter implements IValueFormatter, IAxisValueFormatter
     public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
         return makePretty(value) + mText;
     }
-
-    // IAxisValueFormatter
+	
+	@Override public boolean isDecimalPrecision()
+	{
+		return false;
+	}
+	
+	// IAxisValueFormatter
     @Override
     public String getFormattedValue(float value, AxisBase axis) {
         return makePretty(value) + mText;

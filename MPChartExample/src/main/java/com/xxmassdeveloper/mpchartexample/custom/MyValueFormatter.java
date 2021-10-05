@@ -19,4 +19,9 @@ public class MyValueFormatter implements IValueFormatter
     public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
         return mFormat.format(value) + " $";
     }
+	
+	@Override public boolean isDecimalPrecision()
+	{
+		return false;
+	}
 }

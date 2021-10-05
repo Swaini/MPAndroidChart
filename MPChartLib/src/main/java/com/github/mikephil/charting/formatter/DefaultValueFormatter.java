@@ -59,8 +59,13 @@ public class DefaultValueFormatter implements IValueFormatter
 
         return mFormat.format(value);
     }
-
-    /**
+	
+	@Override public boolean isDecimalPrecision()
+	{
+		return false;
+	}
+	
+	/**
      * Returns the number of decimal digits this formatter uses.
      *
      * @return

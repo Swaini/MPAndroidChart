@@ -172,7 +172,12 @@ public class BarChartPositiveNegative extends DemoBase {
         public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
             return mFormat.format(value);
         }
-    }
+	
+		@Override public boolean isDecimalPrecision()
+		{
+			return false;
+		}
+	}
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

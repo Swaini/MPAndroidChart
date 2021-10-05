@@ -255,8 +255,13 @@ public class StackedBarActivityNegative extends DemoBase implements
         public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
             return mFormat.format(Math.abs(value)) + "m";
         }
-
-        // YAxis
+	
+		@Override public boolean isDecimalPrecision()
+		{
+			return false;
+		}
+	
+		// YAxis
         @Override
         public String getFormattedValue(float value, AxisBase axis) {
             return mFormat.format(Math.abs(value)) + "m";
