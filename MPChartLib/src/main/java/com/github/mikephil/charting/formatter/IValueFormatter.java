@@ -26,6 +26,13 @@ public interface IValueFormatter
      * @return the formatted label ready for being drawn
      */
     String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler);
-    
+	
+	/**
+	 * Called when a value (from labels inside the chart) is formatted
+	 * before being drawn. For performance reasons, avoid excessive calculations
+	 * and memory allocations inside this method.
+	 *
+	 * @return true if the value is has decimal percision
+	 */
 	boolean isDecimalPrecision();
 }
