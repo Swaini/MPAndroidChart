@@ -155,17 +155,17 @@ public abstract class DataRenderer extends Renderer
 		int margin = (int)(textSize / 4);
 		y = y - margin;
 		
-		float left = x - w;
-		float right = x + w;
-		float top = y + margin;
-		float bottom = y - textSize;
+		float left = x - w-10;
+		float right = x + w+10;
+		float top = y + margin+10;
+		float bottom = y - textSize-10;
 		
 		RectF rect = new RectF(left, top, right, bottom);
 		Paint mShadow = new Paint();
-		mShadow.setShadowLayer(6, 0.0f, 2.0f, Color.LTGRAY);
+		mShadow.setShadowLayer(12, 0.0f, 2.0f, Color.LTGRAY);
 		mShadow.setColor(Color.WHITE);
 		mShadow.setStyle(Style.FILL);
-		c.drawRoundRect(rect, 6, 6, mShadow);
+		c.drawRoundRect(rect, 12, 12, mShadow);
 		
 		c.drawText(formatter.getFormattedValue(value, entry, dataSetIndex, mViewPortHandler), x, y, mValuePaint);
 	}
