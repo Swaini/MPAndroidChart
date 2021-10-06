@@ -162,7 +162,7 @@ public abstract class DataRenderer extends Renderer
 		
 		RectF rect = new RectF(left, top, right, bottom);
 		Paint mShadow = new Paint();
-		mShadow.setShadowLayer(12, 0.0f, 2.0f, Color.LTGRAY);
+		mShadow.setShadowLayer(12, 4.0f, 4.0f, Color.parseColor("#26333333"));
 		mShadow.setColor(Color.WHITE);
 		mShadow.setStyle(Style.FILL);
 		c.drawRoundRect(rect, 12, 12, mShadow);
