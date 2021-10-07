@@ -105,7 +105,6 @@ public abstract class DataRenderer extends Renderer
 	 */
 	protected void applyValueTextStyle(IDataSet set)
 	{
-		
 		mValuePaint.setTypeface(set.getValueTypeface());
 		mValuePaint.setTextSize(set.getValueTextSize());
 	}
@@ -140,11 +139,11 @@ public abstract class DataRenderer extends Renderer
 	 */
 	public void drawValue(Canvas c, IValueFormatter formatter, float value, Entry entry, int dataSetIndex, float x, float y, int color)
 	{
-		float w=0;
+		float w = 0;
 		mValuePaint.setColor(color);
 		if(formatter.isDecimalPrecision())
 		{
-			w = mValuePaint.measureText(String.valueOf(value))/1.2f;
+			w = mValuePaint.measureText(String.valueOf(value)) / 1.2f;
 		}
 		else
 		{
@@ -152,22 +151,23 @@ public abstract class DataRenderer extends Renderer
 		}
 		float textSize = mValuePaint.getTextSize();
 		
-		int margin = (int)(textSize / 4);
+		int margin = 10;
+		int padding = 4;
 		y = y - margin;
 		
-		float left = x - w-10;
-		float right = x + w+10;
-		float top = y + margin+10;
-		float bottom = y - textSize-10;
+		float left = x - w - 20;
+		float right = x + w + 20;
+		float top = y + padding;
+		float bottom = y - textSize - margin - padding;
 		
 		RectF rect = new RectF(left, top, right, bottom);
 		Paint mShadow = new Paint();
-		mShadow.setShadowLayer(12, 4.0f, 4.0f, Color.parseColor("#26333333"));
+		mShadow.setShadowLayer(16, 4.0f, 4.0f, Color.parseColor("#26333333"));
 		mShadow.setColor(Color.WHITE);
 		mShadow.setStyle(Style.FILL);
-		c.drawRoundRect(rect, 12, 12, mShadow);
+		c.drawRoundRect(rect, 16, 16, mShadow);
 		
-		c.drawText(formatter.getFormattedValue(value, entry, dataSetIndex, mViewPortHandler), x, y, mValuePaint);
+		c.drawText(formatter.getFormattedValue(value, entry, dataSetIndex, mViewPortHandler), x, y - margin, mValuePaint);
 	}
 	
 	/**

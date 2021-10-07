@@ -9,9 +9,12 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.DragEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.WindowManager;
+import android.widget.FrameLayout;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
@@ -47,12 +50,10 @@ import androidx.core.content.ContextCompat;
  * @version 3.1.0
  * @since 1.7.4
  */
-public class LineChartActivity1 extends DemoBase implements OnSeekBarChangeListener, OnChartValueSelectedListener
+public class LineChartActivity1 extends DemoBase implements  OnChartValueSelectedListener
 {
 	
 	private LineChart chart;
-	private SeekBar seekBarX, seekBarY;
-	private TextView tvX, tvY;
 	
 	@Override protected void onCreate(Bundle savedInstanceState)
 	{
@@ -61,16 +62,6 @@ public class LineChartActivity1 extends DemoBase implements OnSeekBarChangeListe
 		setContentView(R.layout.activity_linechart);
 		
 		setTitle("LineChartActivity1");
-		
-		tvX = findViewById(R.id.tvXMax);
-		tvY = findViewById(R.id.tvYMax);
-		
-		seekBarX = findViewById(R.id.seekBar1);
-		seekBarX.setOnSeekBarChangeListener(this);
-		
-		seekBarY = findViewById(R.id.seekBar2);
-		seekBarY.setMax(180);
-		seekBarY.setOnSeekBarChangeListener(this);
 		
 		
 		{   // // Chart Style // //
@@ -83,27 +74,19 @@ public class LineChartActivity1 extends DemoBase implements OnSeekBarChangeListe
 			chart.getDescription().setEnabled(false);
 			
 			// enable touch gestures
-			chart.setTouchEnabled(true);
+			chart.setTouchEnabled(false);
 			
 			// set listeners
 			chart.setOnChartValueSelectedListener(this);
-			chart.setDrawGridBackground(false);
-			
-			// create marker to display box when values are selected
-			MyMarkerView mv = new MyMarkerView(this, R.layout.custom_marker_view);
-			
-			// Set the marker to the chart
-			mv.setChartView(chart);
-			chart.setMarker(mv);
 			
 			// enable scaling and dragging
-			chart.setDragEnabled(true);
-			chart.setScaleEnabled(true);
+			chart.setScaleEnabled(false);
 			// chart.setScaleXEnabled(true);
 			// chart.setScaleYEnabled(true);
+			chart.setDragEnabled(true);
+			chart.setTouchEnabled(true);
+			chart.enableScroll();
 			
-			// force pinch zoom along both axis
-			chart.setPinchZoom(true);
 		}
 		
 		XAxis xAxis;
@@ -112,6 +95,7 @@ public class LineChartActivity1 extends DemoBase implements OnSeekBarChangeListe
 			
 			// vertical grid lines
 			xAxis.enableGridDashedLine(10f, 10f, 0f);
+			
 		}
 		
 		YAxis yAxis;
@@ -129,52 +113,7 @@ public class LineChartActivity1 extends DemoBase implements OnSeekBarChangeListe
 			yAxis.setAxisMinimum(-50f);
 		}
 		
-		
-		{   // // Create Limit Lines // //
-			LimitLine llXAxis = new LimitLine(9f, "Index 10");
-			llXAxis.setLineWidth(4f);
-			llXAxis.enableDashedLine(10f, 10f, 0f);
-			llXAxis.setLabelPosition(LimitLabelPosition.RIGHT_BOTTOM);
-			llXAxis.setTextSize(10f);
-			llXAxis.setTypeface(tfRegular);
-			
-			LimitLine ll1 = new LimitLine(150f, "Upper Limit");
-			ll1.setLineWidth(4f);
-			ll1.enableDashedLine(10f, 10f, 0f);
-			ll1.setLabelPosition(LimitLabelPosition.RIGHT_TOP);
-			ll1.setTextSize(10f);
-			ll1.setTypeface(tfRegular);
-			
-			LimitLine ll2 = new LimitLine(-30f, "Lower Limit");
-			ll2.setLineWidth(4f);
-			ll2.enableDashedLine(10f, 10f, 0f);
-			ll2.setLabelPosition(LimitLabelPosition.RIGHT_BOTTOM);
-			ll2.setTextSize(10f);
-			ll2.setTypeface(tfRegular);
-			
-			// draw limit lines behind data instead of on top
-			yAxis.setDrawLimitLinesBehindData(true);
-			xAxis.setDrawLimitLinesBehindData(true);
-			
-			// add limit lines
-			yAxis.addLimitLine(ll1);
-			yAxis.addLimitLine(ll2);
-			//xAxis.addLimitLine(llXAxis);
-		}
-		
-		// add data
-		seekBarX.setProgress(45);
-		seekBarY.setProgress(180);
-		setData(45, 180);
-		
-		// draw points over time
-		chart.animateX(1500);
-		
-		// get the legend (only possible after setting data)
-		Legend l = chart.getLegend();
-		
-		// draw legend entries as lines
-		l.setForm(LegendForm.LINE);
+		setData(10, 180);
 	}
 	
 	private void setData(int count, float range)
@@ -186,7 +125,7 @@ public class LineChartActivity1 extends DemoBase implements OnSeekBarChangeListe
 		{
 			
 			float val = (float)(Math.random() * range) - 30;
-			values.add(new Entry(i, val+0.5f, getResources().getDrawable(R.drawable.star)));
+			values.add(new Entry(i, val, getResources().getDrawable(R.drawable.star)));
 		}
 		
 		LineDataSet set1;
@@ -226,21 +165,24 @@ public class LineChartActivity1 extends DemoBase implements OnSeekBarChangeListe
 			set1.setFormLineDashEffect(new DashPathEffect(new float[]{10f, 5f}, 0f));
 			set1.setFormSize(15.f);
 			
-			// text size of values
+			// text size of value
 			set1.setValueTextSize(15f);
 			
 			// draw selection line as dashed
 			set1.enableDashedHighlightLine(10f, 5f, 0f);
-			
-			// set the filled area
-			set1.setDrawFilled(true);
-			set1.setFillFormatter(new IFillFormatter()
-			{
-				@Override public float getFillLinePosition(ILineDataSet dataSet, LineDataProvider dataProvider)
-				{
-					return chart.getAxisLeft().getAxisMinimum();
-				}
-			});
+			XAxis xAxis;
+			xAxis = chart.getXAxis();
+			xAxis.setDrawGridLines(false);
+			xAxis.setDrawAxisLine(false);
+			xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+			xAxis.setTextColor(Color.GRAY);
+			xAxis.setTextSize(14f);
+			xAxis.setLabelCount(3, true);
+			xAxis.setGranularityEnabled(true);
+			xAxis.setGranularity(1f);
+			xAxis.setSpaceMax(0.3f);
+			xAxis.setSpaceMin(0.3f);
+			xAxis.setYOffset(15);
 			
 			// set color of filled area
 			if(Utils.getSDKInt() >= 18)
@@ -259,9 +201,15 @@ public class LineChartActivity1 extends DemoBase implements OnSeekBarChangeListe
 			
 			// create a data object with the data sets
 			LineData data = new LineData(dataSets);
-			
+			chart.setTouchEnabled(true);
 			// set data
 			chart.setData(data);
+			chart.setVisibleXRangeMaximum(5);
+			chart.getLegend().setEnabled(false);
+			chart.setExtraOffsets(20f, 35f, 20f, 35f);
+			chart.setHorizontalScrollBarEnabled(true);
+			chart.setScrollbarFadingEnabled(true);
+			chart.centerViewTo(count, 0, null);
 		}
 	}
 	
@@ -451,26 +399,10 @@ public class LineChartActivity1 extends DemoBase implements OnSeekBarChangeListe
 		return true;
 	}
 	
-	@Override public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser)
-	{
-		
-		tvX.setText(String.valueOf(seekBarX.getProgress()));
-		tvY.setText(String.valueOf(seekBarY.getProgress()));
-		
-		setData(seekBarX.getProgress(), seekBarY.getProgress());
-		
-		// redraw
-		chart.invalidate();
-	}
-	
 	@Override protected void saveToGallery()
 	{
 		saveToGallery(chart, "LineChartActivity1");
 	}
-	
-	@Override public void onStartTrackingTouch(SeekBar seekBar) {}
-	
-	@Override public void onStopTrackingTouch(SeekBar seekBar) {}
 	
 	@Override public void onValueSelected(Entry e, Highlight h)
 	{
