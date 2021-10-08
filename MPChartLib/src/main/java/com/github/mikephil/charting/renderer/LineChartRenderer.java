@@ -10,7 +10,6 @@ import android.graphics.drawable.Drawable;
 import android.util.Log;
 
 import com.github.mikephil.charting.animation.ChartAnimator;
-import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
@@ -26,7 +25,6 @@ import com.github.mikephil.charting.utils.Utils;
 import com.github.mikephil.charting.utils.ViewPortHandler;
 
 import java.lang.ref.WeakReference;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -59,6 +57,7 @@ public class LineChartRenderer extends LineRadarRenderer
 	
 	protected Path cubicPath = new Path();
 	protected Path cubicFillPath = new Path();
+	
 	
 	public LineChartRenderer(LineDataProvider chart, ChartAnimator animator, ViewPortHandler viewPortHandler)
 	{
@@ -636,7 +635,6 @@ public class LineChartRenderer extends LineRadarRenderer
 					float x = positions[j];
 					float y = positions[j + 1];
 					
-					//Log.d("Nikos ", x+","+ y);
 					if(!mViewPortHandler.isInBoundsRight(x))
 					{
 						break;
@@ -666,25 +664,8 @@ public class LineChartRenderer extends LineRadarRenderer
 				MPPointF.recycleInstance(iconsOffset);
 			}
 		}
-//		Entry e1;
-//
-//		e1 = mChart.getLineData().getDataSets().get(0).getEntryForIndex(mXBounds.min);
-		
-//		if(mChart.getLineData().getDataSets().get(0).getEntryCount() > mXBounds.range)
-//		{
-//			float scrollbarWidth = c.getWidth() * (mXBounds.range / (float)mChart.getLineData().getDataSets().get(0).getEntryCount());
-//			int offset = 100;
-//			float starting = (e1.getX() / (float)mXBounds.range) * scrollbarWidth + offset;
-//			float ending = (e1.getX() / (float)mXBounds.range) * scrollbarWidth + scrollbarWidth + offset;
-//			//Log.d("Nikos ", e1.getX() + ": " + starting + "-" + ending);
-//			RectF rect1 = new RectF(starting, c.getHeight() - 30, ending, c.getHeight() - 40);
-//			Paint scroll = new Paint();
-//			scroll.setColor(Color.LTGRAY);
-//			scroll.setStyle(Paint.Style.FILL);
-//			c.drawRoundRect(rect1, 16, 16, scroll);
-//		}
 	}
-
+	
 	/**
 	 * Draws the scrollbar according to the current {@link ViewPortHandler#getTransX()}
 	 *
@@ -692,15 +673,12 @@ public class LineChartRenderer extends LineRadarRenderer
 	 */
 	public void drawScrollbar(Canvas canvas)
 	{
-		// Charlie's changes
-		float maxTransX = -mViewPortHandler.contentWidth() * (mViewPortHandler.getScaleX() - 1f);
+		float scrollbarWidth = (mViewPortHandler.getContentRect().width() * ((float)mViewPortHandler.getMaxPointsPerScreen() / mChart.getLineData().getEntryCount()));
+		float maxTransX = mViewPortHandler.contentWidth() * (mViewPortHandler.getScaleX() - 1f);
 		float currentDrag = Math.abs(mViewPortHandler.getTransX()) / Math.abs(maxTransX);
-		float scrollbarWidth = (mViewPortHandler.getContentRect().width() / mViewPortHandler.getScaleX());
-		int offset = 100;
-		float starting = currentDrag * scrollbarWidth + offset;
-		float ending = currentDrag * scrollbarWidth + scrollbarWidth + offset;
-
-		// Same as Nikos' solution above
+		int offsetStart = (int)mViewPortHandler.offsetLeft();
+		float starting = currentDrag * (mViewPortHandler.getContentRect().width() - scrollbarWidth) + offsetStart;
+		float ending = starting + scrollbarWidth ;
 		RectF rect1 = new RectF(starting, canvas.getHeight() - 30, ending, canvas.getHeight() - 40);
 		Paint scroll = new Paint();
 		scroll.setColor(Color.LTGRAY);

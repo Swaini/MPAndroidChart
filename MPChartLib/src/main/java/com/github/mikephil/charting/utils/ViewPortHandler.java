@@ -13,6 +13,7 @@ import android.view.View;
  */
 public class ViewPortHandler {
 
+	protected int maxPointsPerScreen=6;
     /**
      * matrix used for touch events
      */
@@ -756,4 +757,12 @@ public class ViewPortHandler {
     public boolean canZoomInMoreY() {
         return mScaleY < mMaxScaleY;
     }
+    
+    public int getMaxPointsPerScreen(){
+    	return maxPointsPerScreen;
+	}
+	
+	public void setMaxPointsPerScreen(int maxPointsPerScreen){
+    	this.maxPointsPerScreen = maxPointsPerScreen;
+	}
 }

@@ -765,6 +765,7 @@ public abstract class BarLineChartBase<T extends BarLineScatterCandleBubbleData<
     public void setVisibleXRangeMaximum(float maxXRange) {
         float xScale = mXAxis.mAxisRange / (maxXRange);
         mViewPortHandler.setMinimumScaleX(xScale);
+        mViewPortHandler.setMaxPointsPerScreen((int)maxXRange);
     }
 
     /**
@@ -1418,7 +1419,8 @@ public abstract class BarLineChartBase<T extends BarLineScatterCandleBubbleData<
      *
      * @return
      */
-    public float getVisibleXRange() {
+    public float getVisibleXRange()
+	{
         return Math.abs(getHighestVisibleX() - getLowestVisibleX());
     }
 
