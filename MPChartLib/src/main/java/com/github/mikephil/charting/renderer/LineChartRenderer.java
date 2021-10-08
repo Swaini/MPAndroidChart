@@ -636,7 +636,7 @@ public class LineChartRenderer extends LineRadarRenderer
 					float x = positions[j];
 					float y = positions[j + 1];
 					
-					Log.d("Nikos ", x+","+ y);
+					//Log.d("Nikos ", x+","+ y);
 					if(!mViewPortHandler.isInBoundsRight(x))
 					{
 						break;
@@ -666,23 +666,46 @@ public class LineChartRenderer extends LineRadarRenderer
 				MPPointF.recycleInstance(iconsOffset);
 			}
 		}
-		Entry e1;
+//		Entry e1;
+//
+//		e1 = mChart.getLineData().getDataSets().get(0).getEntryForIndex(mXBounds.min);
 		
-		e1 = mChart.getLineData().getDataSets().get(0).getEntryForIndex(mXBounds.min);
-		
-		if(mChart.getLineData().getDataSets().get(0).getEntryCount() > mXBounds.range)
-		{
-			float scrollbarWidth = c.getWidth() * (mXBounds.range / (float)mChart.getLineData().getDataSets().get(0).getEntryCount());
-			int offset = 100;
-			float starting = (e1.getX() / (float)mXBounds.range) * scrollbarWidth + offset;
-			float ending = (e1.getX() / (float)mXBounds.range) * scrollbarWidth + scrollbarWidth + offset;
-			//Log.d("Nikos ", e1.getX() + ": " + starting + "-" + ending);
-			RectF rect1 = new RectF(starting, c.getHeight() - 30, ending, c.getHeight() - 40);
-			Paint scroll = new Paint();
-			scroll.setColor(Color.LTGRAY);
-			scroll.setStyle(Paint.Style.FILL);
-			c.drawRoundRect(rect1, 16, 16, scroll);
-		}
+//		if(mChart.getLineData().getDataSets().get(0).getEntryCount() > mXBounds.range)
+//		{
+//			float scrollbarWidth = c.getWidth() * (mXBounds.range / (float)mChart.getLineData().getDataSets().get(0).getEntryCount());
+//			int offset = 100;
+//			float starting = (e1.getX() / (float)mXBounds.range) * scrollbarWidth + offset;
+//			float ending = (e1.getX() / (float)mXBounds.range) * scrollbarWidth + scrollbarWidth + offset;
+//			//Log.d("Nikos ", e1.getX() + ": " + starting + "-" + ending);
+//			RectF rect1 = new RectF(starting, c.getHeight() - 30, ending, c.getHeight() - 40);
+//			Paint scroll = new Paint();
+//			scroll.setColor(Color.LTGRAY);
+//			scroll.setStyle(Paint.Style.FILL);
+//			c.drawRoundRect(rect1, 16, 16, scroll);
+//		}
+	}
+
+	/**
+	 * Draws the scrollbar according to the current {@link ViewPortHandler#getTransX()}
+	 *
+	 * @param canvas the canvas on which to draw the scrollbar
+	 */
+	public void drawScrollbar(Canvas canvas)
+	{
+		// Charlie's changes
+		float maxTransX = -mViewPortHandler.contentWidth() * (mViewPortHandler.getScaleX() - 1f);
+		float currentDrag = Math.abs(mViewPortHandler.getTransX()) / Math.abs(maxTransX);
+		float scrollbarWidth = (mViewPortHandler.getContentRect().width() / mViewPortHandler.getScaleX());
+		int offset = 100;
+		float starting = currentDrag * scrollbarWidth + offset;
+		float ending = currentDrag * scrollbarWidth + scrollbarWidth + offset;
+
+		// Same as Nikos' solution above
+		RectF rect1 = new RectF(starting, canvas.getHeight() - 30, ending, canvas.getHeight() - 40);
+		Paint scroll = new Paint();
+		scroll.setColor(Color.LTGRAY);
+		scroll.setStyle(Paint.Style.FILL);
+		canvas.drawRoundRect(rect1, 16, 16, scroll);
 	}
 	
 	@Override public void drawExtras(Canvas c)
@@ -841,7 +864,7 @@ public class LineChartRenderer extends LineRadarRenderer
 	}
 	
 	/**
-	 * Releases the drawing bitmap. This should be called when {@link LineChart#onDetachedFromWindow()}.
+	 * Releases the drawing bitmap. This should be called when .
 	 */
 	public void releaseBitmap()
 	{
