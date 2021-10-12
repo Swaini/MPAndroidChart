@@ -7,9 +7,9 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
-import android.util.Log;
 
 import com.github.mikephil.charting.animation.ChartAnimator;
+import com.github.mikephil.charting.components.Scrollbar;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
@@ -673,17 +673,18 @@ public class LineChartRenderer extends LineRadarRenderer
 	 */
 	public void drawScrollbar(Canvas canvas)
 	{
+		Scrollbar scrollbarConfig = mViewPortHandler.getScroll();
 		float scrollbarWidth = (mViewPortHandler.getContentRect().width() * ((float)mViewPortHandler.getMaxPointsPerScreen() / mChart.getLineData().getEntryCount()));
 		float maxTransX = mViewPortHandler.contentWidth() * (mViewPortHandler.getScaleX() - 1f);
 		float currentDrag = Math.abs(mViewPortHandler.getTransX()) / Math.abs(maxTransX);
 		int offsetStart = (int)mViewPortHandler.offsetLeft();
 		float starting = currentDrag * (mViewPortHandler.getContentRect().width() - scrollbarWidth) + offsetStart;
-		float ending = starting + scrollbarWidth ;
-		RectF rect1 = new RectF(starting, canvas.getHeight() - 30, ending, canvas.getHeight() - 40);
+		float ending = starting + scrollbarWidth;
+		RectF rect1 = new RectF(starting, canvas.getHeight() - scrollbarConfig.getScrollOffSetBottom(), ending, canvas.getHeight() - scrollbarConfig.getScrollHeight() - scrollbarConfig.getScrollOffSetBottom());
 		Paint scroll = new Paint();
-		scroll.setColor(Color.LTGRAY);
+		scroll.setColor(scrollbarConfig.getScrollColor());
 		scroll.setStyle(Paint.Style.FILL);
-		canvas.drawRoundRect(rect1, 16, 16, scroll);
+		canvas.drawRoundRect(rect1, scrollbarConfig.getRadiusCorners(), scrollbarConfig.getRadiusCorners(), scroll);
 	}
 	
 	@Override public void drawExtras(Canvas c)

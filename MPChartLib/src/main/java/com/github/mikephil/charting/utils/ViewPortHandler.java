@@ -5,6 +5,8 @@ import android.graphics.Matrix;
 import android.graphics.RectF;
 import android.view.View;
 
+import com.github.mikephil.charting.components.Scrollbar;
+
 /**
  * Class that contains information about the charts current viewport settings, including offsets, scale & translation
  * levels, ...
@@ -12,7 +14,9 @@ import android.view.View;
  * @author Philipp Jahoda
  */
 public class ViewPortHandler {
-
+	
+	protected Scrollbar scrollbar;
+	
 	protected int maxPointsPerScreen=6;
     /**
      * matrix used for touch events
@@ -764,5 +768,16 @@ public class ViewPortHandler {
 	
 	public void setMaxPointsPerScreen(int maxPointsPerScreen){
     	this.maxPointsPerScreen = maxPointsPerScreen;
+	}
+	
+	
+	public Scrollbar getScroll()
+	{
+		return scrollbar;
+	}
+	
+	public void setScroll(Scrollbar scrollbar)
+	{
+		this.scrollbar = scrollbar;
 	}
 }

@@ -14,6 +14,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 
+import com.github.mikephil.charting.components.Scrollbar;
 import com.github.mikephil.charting.components.XAxis.XAxisPosition;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.components.YAxis.AxisDependency;
@@ -134,6 +135,7 @@ public abstract class BarLineChartBase<T extends BarLineScatterCandleBubbleData<
     protected Transformer mRightAxisTransformer;
 
     protected XAxisRenderer mXAxisRenderer;
+	protected Scrollbar scrollbar;
 
     // /** the approximator object used for data filtering */
     // private Approximator mApproximator;
@@ -1673,4 +1675,14 @@ public abstract class BarLineChartBase<T extends BarLineScatterCandleBubbleData<
             mViewPortHandler.refresh(mViewPortHandler.getMatrixTouch(), this, true);
         }
     }
+    
+    public void setScroll(Scrollbar scrollbar){
+    	this.scrollbar = scrollbar;
+    	mViewPortHandler.setScroll(scrollbar);
+	}
+	
+	public Scrollbar getScroll()
+	{
+		return this.scrollbar;
+	}
 }

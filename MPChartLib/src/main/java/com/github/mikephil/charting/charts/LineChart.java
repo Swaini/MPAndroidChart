@@ -38,7 +38,10 @@ public class LineChart extends BarLineChartBase<LineData> implements LineDataPro
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        ((LineChartRenderer) mRenderer).drawScrollbar(canvas);
+		if(this.scrollbar != null)
+		{
+			((LineChartRenderer)mRenderer).drawScrollbar(canvas);
+		}
     }
 
     @Override
