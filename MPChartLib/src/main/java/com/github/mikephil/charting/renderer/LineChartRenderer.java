@@ -674,7 +674,8 @@ public class LineChartRenderer extends LineRadarRenderer
 	public void drawScrollbar(Canvas canvas)
 	{
 		Scrollbar scrollbarConfig = mViewPortHandler.getScroll();
-		float scrollbarWidth = (mViewPortHandler.getContentRect().width() * ((float)mViewPortHandler.getMaxPointsPerScreen() / mChart.getLineData().getEntryCount()));
+		int valuesPerLine = mChart.getData().getEntryCount()/mChart.getData().getDataSetCount();
+		float scrollbarWidth = (mViewPortHandler.getContentRect().width() * ((float)mViewPortHandler.getMaxPointsPerScreen() /valuesPerLine ));
 		float maxTransX = mViewPortHandler.contentWidth() * (mViewPortHandler.getScaleX() - 1f);
 		float currentDrag = Math.abs(mViewPortHandler.getTransX()) / Math.abs(maxTransX);
 		int offsetStart = (int)mViewPortHandler.offsetLeft();
