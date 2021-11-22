@@ -31,7 +31,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+    implementation 'com.github.Swaini:MPAndroidChart:v1.0.0'
 }
 ```
 
@@ -46,19 +46,15 @@ dependencies {
 
 <!-- <dependencies> section of pom.xml -->
 <dependency>
-    <groupId>com.github.PhilJay</groupId>
+    <groupId>com.github.Swaini</groupId>
     <artifactId>MPAndroidChart</artifactId>
-    <version>v3.1.0</version>
+    <version>v1.0.0</version>
 </dependency>
 ```
 
 <br/>
 
 <h2 id="documentation">Documentation :notebook_with_decorative_cover:</h2>
-
-See the [**documentation**](https://weeklycoding.com/mpandroidchart/) for examples and general use of MPAndroidChart.
-
-See the [**javadocs**](https://jitpack.io/com/github/PhilJay/MPAndroidChart/v3.1.0/javadoc/) for more advanced documentation.
 
 <br/>
 
