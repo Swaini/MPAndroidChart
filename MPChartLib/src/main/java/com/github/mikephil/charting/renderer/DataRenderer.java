@@ -152,8 +152,8 @@ public abstract class DataRenderer extends Renderer
 		float textSize = mValuePaint.getTextSize();
 		
 		float margin = mViewPortHandler.labelSpacings.marginBottom;
-		int paddingVertical = mViewPortHandler.labelSpacings.paddingVertical;
-		int paddingHorizontal = mViewPortHandler.labelSpacings.paddingHorizontal;
+		float paddingVertical = mViewPortHandler.labelSpacings.paddingVertical;
+		float paddingHorizontal = mViewPortHandler.labelSpacings.paddingHorizontal;
 		y = y - margin;
 		
 		float left = x - w - paddingHorizontal;
