@@ -151,14 +151,15 @@ public abstract class DataRenderer extends Renderer
 		}
 		float textSize = mValuePaint.getTextSize();
 		
-		int margin = 10;
-		int padding = 4;
+		float margin = mViewPortHandler.labelSpacings.marginBottom;
+		int paddingVertical = mViewPortHandler.labelSpacings.paddingVertical;
+		int paddingHorizontal = mViewPortHandler.labelSpacings.paddingHorizontal;
 		y = y - margin;
 		
-		float left = x - w - 20;
-		float right = x + w + 20;
-		float top = y + padding;
-		float bottom = y - textSize - margin - padding;
+		float left = x - w - paddingHorizontal;
+		float right = x + w + paddingHorizontal;
+		float top = y + paddingVertical;
+		float bottom = y - textSize - margin - paddingVertical;
 		
 		RectF rect = new RectF(left, top, right, bottom);
 		Paint mShadow = new Paint();
