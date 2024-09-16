@@ -6,6 +6,7 @@ import android.graphics.RectF;
 import android.view.View;
 
 import com.github.mikephil.charting.components.Scrollbar;
+import com.github.mikephil.charting.model.LabelSpacings;
 
 /**
  * Class that contains information about the charts current viewport settings, including offsets, scale & translation
@@ -30,6 +31,8 @@ public class ViewPortHandler {
 
     protected float mChartWidth = 0f;
     protected float mChartHeight = 0f;
+
+    public LabelSpacings labelSpacings = new LabelSpacings();
 
     /**
      * minimum scale value on the y-axis
@@ -95,8 +98,7 @@ public class ViewPortHandler {
      * @param height
      */
 
-    public void setChartDimens(float width, float height) {
-
+    public void setChartDimens(float width, float height, LabelSpacings labelSpacings) {
         float offsetLeft = this.offsetLeft();
         float offsetTop = this.offsetTop();
         float offsetRight = this.offsetRight();
@@ -104,6 +106,15 @@ public class ViewPortHandler {
 
         mChartHeight = height;
         mChartWidth = width;
+
+        if (labelSpacings == null)
+        {
+            this.labelSpacings = new LabelSpacings();
+        }
+        else
+        {
+            this.labelSpacings = labelSpacings;
+        }
 
         restrainViewPort(offsetLeft, offsetTop, offsetRight, offsetBottom);
     }
