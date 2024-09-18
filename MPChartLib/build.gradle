@@ -37,20 +37,6 @@ tasks.register('sourcesJar', Jar) {
 	archiveClassifier.set('sources')
 }
 
-tasks.register('javadoc', Javadoc) {
-	options.charSet = 'UTF-8'
-	failOnError false
-	source = android.sourceSets.main.java.sourceFiles
-	classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
-}
-
-tasks.register('javadocJar', Jar) {
-	dependsOn javadoc
-	archiveClassifier.set('javadoc')
-	from javadoc.destinationDir
-}
-
 artifacts {
     archives sourcesJar
-    archives javadocJar
 }
