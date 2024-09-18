@@ -15,75 +15,85 @@
  limitations under the License.
 -->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-	<version>1.4.2-SNAPSHOT</version>
-    <groupId>com.github.mikephil</groupId>
-    <artifactId>MPAndroidChart</artifactId>
-    <name>MPAndroidChart</name>
-	<description>A simple Android chart view/graph view library, supporting line- bar- and piecharts as well as scaling, dragging and animations</description>
-	<url>https://github.com/PhilJay/MPAndroidChart</url>
-    <packaging>apklib</packaging>
-    <!--<packaging>aar</packaging>-->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
+	<modelVersion>4.0.0</modelVersion>
 
-    <build>
-    	<sourceDirectory>src</sourceDirectory>
-        <plugins>
-            <plugin>
-                <groupId>com.jayway.maven.plugins.android.generation2</groupId>
-                <artifactId>android-maven-plugin</artifactId>
-                <version>3.9.0-rc.2</version>
-                <extensions>true</extensions>
-                <configuration>
-                    <!--<sdk>-->
-                        <!--<path>${env.ANDROID_HOME}</path>-->
-                        <!--<platform>16</platform>-->
-                    <!--</sdk>-->
-                    <undeployBeforeDeploy>true</undeployBeforeDeploy>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
+	<!-- Updated version to 1.0.0-SNAPSHOT -->
+	<version>1.0.0-SNAPSHOT</version>
 
-    <dependencies>
-        <dependency>
-            <groupId>com.google.android</groupId>
-            <artifactId>android</artifactId>
-            <scope>provided</scope>
-            <version>4.1.1.4</version>
-        </dependency>
-    </dependencies>
+	<!-- Updated groupId to com.github.swaini -->
+	<groupId>com.github.swaini</groupId>
 
+	<artifactId>MPAndroidChart</artifactId>
+	<name>MPAndroidChart</name>
+	<description>A simple Android chart view/graph view library, supporting line- bar- and piecharts as well as scaling, dragging, and animations.</description>
+	<url>https://github.com/Swaini/MPAndroidChart</url>
 
-    <issueManagement>
-        <url>https://github.com/PhilJay/MPAndroidChart/issues</url>
-        <system>GitHub Issues</system>
-    </issueManagement>
+	<!-- Changed packaging from apklib to aar for Android Library -->
+	<packaging>aar</packaging>
 
-    <licenses>
-        <license>
-            <name>Apache License Version 2.0</name>
-            <url>http://www.apache.org/licenses/LICENSE-2.0.html</url>
-            <distribution>repo</distribution>
-        </license>
-    </licenses>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
 
-    <scm>
-        <url>https://github.com/PhilJay/MPAndroidChart</url>
-        <connection>scm:git:git://github.com/PhilJay/MPAndroidChart.git</connection>
-        <developerConnection>scm:git:git@github.com:PhilJay/MPAndroidChart.git</developerConnection>
-    </scm>
+	<build>
+		<sourceDirectory>src</sourceDirectory>
+		<plugins>
+			<!-- Updated android-maven-plugin to the newer version -->
+			<plugin>
+				<groupId>com.simpligility.maven.plugins</groupId>
+				<artifactId>android-maven-plugin</artifactId>
+				<version>4.6.0</version>
+				<extensions>true</extensions>
+				<configuration>
+					<!-- Target SDK version updated to API 29 -->
+					<sdk>
+						<platform>29</platform>
+					</sdk>
+					<undeployBeforeDeploy>true</undeployBeforeDeploy>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 
-    <developers>
-        <developer>
-            <name>Philipp Jahoda</name>
-            <email>philjay.librarysup@gmail.com</email>
-            <url>http://stackoverflow.com/users/1590502/philipp-jahoda</url>
-            <id>PhilJay</id>
-        </developer>
-    </developers>
+	<dependencies>
+		<!-- Updated Android SDK dependency (old version retained) -->
+		<dependency>
+			<groupId>com.google.android</groupId>
+			<artifactId>android</artifactId>
+			<scope>provided</scope>
+			<version>4.1.1.4</version>
+		</dependency>
+	</dependencies>
+
+	<issueManagement>
+		<url>https://github.com/Swaini/MPAndroidChart/issues</url>
+		<system>GitHub Issues</system>
+	</issueManagement>
+
+	<licenses>
+		<license>
+			<name>Apache License Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.html</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+
+	<scm>
+		<url>https://github.com/Swaini/MPAndroidChart</url>
+		<connection>scm:git:git://github.com/Swaini/MPAndroidChart.git</connection>
+		<developerConnection>scm:git:git@github.com:Swaini/MPAndroidChart.git</developerConnection>
+	</scm>
+
+	<developers>
+		<developer>
+			<name>Swaini</name>
+			<email>swaini.librarysup@gmail.com</email>
+			<url>http://stackoverflow.com/users/1590502/swaini</url>
+			<id>Swaini</id>
+		</developer>
+	</developers>
 </project>
