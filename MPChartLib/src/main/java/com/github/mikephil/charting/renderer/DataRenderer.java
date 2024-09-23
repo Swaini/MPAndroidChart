@@ -40,6 +40,8 @@ public abstract class DataRenderer extends Renderer
 	protected Paint mHighlightPaint;
 	
 	protected Paint mDrawPaint;
+
+	protected Paint mMarginPaint;
 	
 	/**
 	 * paint object for drawing values (text representing values of chart
@@ -66,6 +68,9 @@ public abstract class DataRenderer extends Renderer
 		mHighlightPaint.setStyle(Paint.Style.STROKE);
 		mHighlightPaint.setStrokeWidth(2f);
 		mHighlightPaint.setColor(Color.rgb(255, 187, 115));
+
+		mMarginPaint = new Paint();
+		mMarginPaint.setColor(Color.TRANSPARENT);
 	}
 	
 	protected boolean isDrawingValuesAllowed(ChartInterface chart)
@@ -159,7 +164,7 @@ public abstract class DataRenderer extends Renderer
 		float left = x - w - paddingHorizontal;
 		float right = x + w + paddingHorizontal;
 		float top = y + paddingVertical;
-		float bottom = y - textSize - margin - paddingVertical;
+		float bottom = y - textSize - margin;
 		
 		RectF rect = new RectF(left, top, right, bottom);
 		Paint mShadow = new Paint();
@@ -169,6 +174,8 @@ public abstract class DataRenderer extends Renderer
 		c.drawRoundRect(rect, 16, 16, mShadow);
 		
 		c.drawText(formatter.getFormattedValue(value, entry, dataSetIndex, mViewPortHandler), x, y - margin, mValuePaint);
+		RectF marginRect = new RectF(left, bottom, right, bottom - margin);
+		c.drawRect(marginRect, mMarginPaint);
 	}
 	
 	/**
