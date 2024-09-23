@@ -42,6 +42,8 @@ public abstract class DataRenderer extends Renderer
 	protected Paint mDrawPaint;
 
 	protected Paint mMarginPaint;
+
+	protected Paint mShadowPaint;
 	
 	/**
 	 * paint object for drawing values (text representing values of chart
@@ -68,6 +70,11 @@ public abstract class DataRenderer extends Renderer
 		mHighlightPaint.setStyle(Paint.Style.STROKE);
 		mHighlightPaint.setStrokeWidth(2f);
 		mHighlightPaint.setColor(Color.rgb(255, 187, 115));
+
+		mShadowPaint = new Paint();
+		mShadowPaint.setShadowLayer(16, 4.0f, 4.0f, Color.parseColor("#26333333"));
+		mShadowPaint.setColor(Color.WHITE);
+		mShadowPaint.setStyle(Style.FILL);
 
 		mMarginPaint = new Paint();
 		mMarginPaint.setColor(Color.TRANSPARENT);
@@ -167,11 +174,7 @@ public abstract class DataRenderer extends Renderer
 		float bottom = y - textSize - margin;
 		
 		RectF rect = new RectF(left, top, right, bottom);
-		Paint mShadow = new Paint();
-		mShadow.setShadowLayer(16, 4.0f, 4.0f, Color.parseColor("#26333333"));
-		mShadow.setColor(Color.WHITE);
-		mShadow.setStyle(Style.FILL);
-		c.drawRoundRect(rect, 16, 16, mShadow);
+		c.drawRoundRect(rect, 16, 16, mShadowPaint);
 		
 		c.drawText(formatter.getFormattedValue(value, entry, dataSetIndex, mViewPortHandler), x, y - margin, mValuePaint);
 		RectF marginRect = new RectF(left, bottom, right, bottom - margin);
