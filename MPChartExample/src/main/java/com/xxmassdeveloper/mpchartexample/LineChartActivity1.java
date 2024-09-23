@@ -24,6 +24,7 @@ import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
+import com.github.mikephil.charting.model.LabelSpacings;
 import com.github.mikephil.charting.utils.Utils;
 import com.xxmassdeveloper.mpchartexample.notimportant.DemoBase;
 
@@ -54,6 +55,12 @@ public class LineChartActivity1 extends DemoBase implements OnChartValueSelected
 		
 		{   // // Chart Style // //
 			chart = findViewById(R.id.chart1);
+
+			chart.labelSpacings = new LabelSpacings(
+					getResources().getDimension(R.dimen.padding_horizontal),
+					getResources().getDimension(R.dimen.padding_vertical),
+					getResources().getDimension(R.dimen.margin_vertical)
+			);
 			
 			// background color
 			chart.setBackgroundColor(Color.WHITE);

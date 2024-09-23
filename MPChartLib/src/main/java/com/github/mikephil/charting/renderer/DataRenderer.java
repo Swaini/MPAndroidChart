@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
 import android.graphics.Paint.Style;
+import android.graphics.Rect;
 import android.graphics.RectF;
 
 import com.github.mikephil.charting.animation.ChartAnimator;
@@ -151,32 +152,27 @@ public abstract class DataRenderer extends Renderer
 	 */
 	public void drawValue(Canvas c, IValueFormatter formatter, float value, Entry entry, int dataSetIndex, float x, float y, int color)
 	{
-		float w = 0;
+		Rect textBounds = new Rect();
+		String formatted = formatter.getFormattedValue(value, entry, dataSetIndex, mViewPortHandler);
 		mValuePaint.setColor(color);
-		if(formatter.isDecimalPrecision())
-		{
-			w = mValuePaint.measureText(String.valueOf(value)) / 1.2f;
-		}
-		else
-		{
-			w = mValuePaint.measureText(String.valueOf(value)) / 2;
-		}
-		float textSize = mValuePaint.getTextSize();
+		mValuePaint.getTextBounds(formatted, 0, formatted.length(), textBounds);
 		
 		float margin = mViewPortHandler.labelSpacings.marginBottom;
 		float paddingVertical = mViewPortHandler.labelSpacings.paddingVertical;
 		float paddingHorizontal = mViewPortHandler.labelSpacings.paddingHorizontal;
-		y = y - margin;
-		
-		float left = x - w - paddingHorizontal;
-		float right = x + w + paddingHorizontal;
+		y = y - margin - paddingVertical;
+
+		float w = textBounds.width();
+		float h = textBounds.height();
+		float left = x - (w * 0.5f) - paddingHorizontal;
+		float right = x + (w * 0.5f) + paddingHorizontal;
 		float top = y + paddingVertical;
-		float bottom = y - textSize - margin;
+		float bottom = y - h - paddingVertical;
 		
 		RectF rect = new RectF(left, top, right, bottom);
 		c.drawRoundRect(rect, 16, 16, mShadowPaint);
 		
-		c.drawText(formatter.getFormattedValue(value, entry, dataSetIndex, mViewPortHandler), x, y - margin, mValuePaint);
+		c.drawText(formatted, x, y, mValuePaint);
 		RectF marginRect = new RectF(left, bottom, right, bottom - margin);
 		c.drawRect(marginRect, mMarginPaint);
 	}
