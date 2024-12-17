@@ -44,6 +44,7 @@ import com.github.mikephil.charting.interfaces.datasets.IDataSet;
 import com.github.mikephil.charting.listener.ChartTouchListener;
 import com.github.mikephil.charting.listener.OnChartGestureListener;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
+import com.github.mikephil.charting.model.LabelSpacings;
 import com.github.mikephil.charting.renderer.DataRenderer;
 import com.github.mikephil.charting.renderer.LegendRenderer;
 import com.github.mikephil.charting.utils.MPPointF;
@@ -100,6 +101,8 @@ public abstract class Chart<T extends ChartData<? extends IDataSet<? extends Ent
      * default value-formatter, number of digits depends on provided chart-data
      */
     protected DefaultValueFormatter mDefaultValueFormatter = new DefaultValueFormatter(0);
+
+    public LabelSpacings labelSpacings = new LabelSpacings();
 
     /**
      * paint object used for drawing the description text in the bottom right
@@ -1741,7 +1744,7 @@ public abstract class Chart<T extends ChartData<? extends IDataSet<? extends Ent
         if (w > 0 && h > 0 && w < 10000 && h < 10000) {
             if (mLogEnabled)
                 Log.i(LOG_TAG, "Setting chart dimens, width: " + w + ", height: " + h);
-            mViewPortHandler.setChartDimens(w, h);
+            mViewPortHandler.setChartDimens(w, h, labelSpacings);
         } else {
             if (mLogEnabled)
                 Log.w(LOG_TAG, "*Avoiding* setting chart dimens! width: " + w + ", height: " + h);

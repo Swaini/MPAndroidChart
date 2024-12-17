@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
 import android.graphics.Paint.Style;
+import android.graphics.Rect;
 import android.graphics.RectF;
 
 import com.github.mikephil.charting.animation.ChartAnimator;
@@ -40,6 +41,10 @@ public abstract class DataRenderer extends Renderer
 	protected Paint mHighlightPaint;
 	
 	protected Paint mDrawPaint;
+
+	protected Paint mMarginPaint;
+
+	protected Paint mShadowPaint;
 	
 	/**
 	 * paint object for drawing values (text representing values of chart
@@ -66,6 +71,14 @@ public abstract class DataRenderer extends Renderer
 		mHighlightPaint.setStyle(Paint.Style.STROKE);
 		mHighlightPaint.setStrokeWidth(2f);
 		mHighlightPaint.setColor(Color.rgb(255, 187, 115));
+
+		mShadowPaint = new Paint();
+		mShadowPaint.setShadowLayer(16, 4.0f, 4.0f, Color.parseColor("#26333333"));
+		mShadowPaint.setColor(Color.WHITE);
+		mShadowPaint.setStyle(Style.FILL);
+
+		mMarginPaint = new Paint();
+		mMarginPaint.setColor(Color.TRANSPARENT);
 	}
 	
 	protected boolean isDrawingValuesAllowed(ChartInterface chart)
@@ -139,35 +152,29 @@ public abstract class DataRenderer extends Renderer
 	 */
 	public void drawValue(Canvas c, IValueFormatter formatter, float value, Entry entry, int dataSetIndex, float x, float y, int color)
 	{
-		float w = 0;
+		Rect textBounds = new Rect();
+		String formatted = formatter.getFormattedValue(value, entry, dataSetIndex, mViewPortHandler);
 		mValuePaint.setColor(color);
-		if(formatter.isDecimalPrecision())
-		{
-			w = mValuePaint.measureText(String.valueOf(value)) / 1.2f;
-		}
-		else
-		{
-			w = mValuePaint.measureText(String.valueOf(value)) / 2;
-		}
-		float textSize = mValuePaint.getTextSize();
+		mValuePaint.getTextBounds(formatted, 0, formatted.length(), textBounds);
 		
-		int margin = 10;
-		int padding = 4;
-		y = y - margin;
-		
-		float left = x - w - 20;
-		float right = x + w + 20;
-		float top = y + padding;
-		float bottom = y - textSize - margin - padding;
+		float margin = mViewPortHandler.labelSpacings.marginBottom;
+		float paddingVertical = mViewPortHandler.labelSpacings.paddingVertical;
+		float paddingHorizontal = mViewPortHandler.labelSpacings.paddingHorizontal;
+		y = y - margin - paddingVertical;
+
+		float w = textBounds.width();
+		float h = textBounds.height();
+		float left = x - (w * 0.5f) - paddingHorizontal;
+		float right = x + (w * 0.5f) + paddingHorizontal;
+		float top = y + paddingVertical;
+		float bottom = y - h - paddingVertical;
 		
 		RectF rect = new RectF(left, top, right, bottom);
-		Paint mShadow = new Paint();
-		mShadow.setShadowLayer(16, 4.0f, 4.0f, Color.parseColor("#26333333"));
-		mShadow.setColor(Color.WHITE);
-		mShadow.setStyle(Style.FILL);
-		c.drawRoundRect(rect, 16, 16, mShadow);
+		c.drawRoundRect(rect, 16, 16, mShadowPaint);
 		
-		c.drawText(formatter.getFormattedValue(value, entry, dataSetIndex, mViewPortHandler), x, y - margin, mValuePaint);
+		c.drawText(formatted, x, y, mValuePaint);
+		RectF marginRect = new RectF(left, bottom, right, bottom - margin);
+		c.drawRect(marginRect, mMarginPaint);
 	}
 	
 	/**

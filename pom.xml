@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (c) 2014 Philipp Jahoda <philjay.librarysup@gmail.com>
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<!-- Updated version to 1.1.0-SNAPSHOT -->
+	<version>1.1.0-SNAPSHOT</version>
+
+	<!-- Updated groupId to com.github.swaini -->
+	<groupId>com.github.swaini</groupId>
+
+	<artifactId>MPAndroidChart</artifactId>
+	<name>MPAndroidChart</name>
+	<description>A simple Android chart view/graph view library, supporting line- bar- and piecharts as well as scaling, dragging, and animations.</description>
+	<url>https://github.com/Swaini/MPAndroidChart</url>
+
+	<!-- Changed packaging from apklib to aar for Android Library -->
+	<packaging>aar</packaging>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+	<build>
+		<sourceDirectory>src</sourceDirectory>
+		<plugins>
+			<!-- Updated android-maven-plugin to the newer version -->
+			<plugin>
+				<groupId>com.simpligility.maven.plugins</groupId>
+				<artifactId>android-maven-plugin</artifactId>
+				<version>4.6.0</version>
+				<extensions>true</extensions>
+				<configuration>
+					<!-- Target SDK version updated to API 29 -->
+					<sdk>
+						<platform>29</platform>
+					</sdk>
+					<undeployBeforeDeploy>true</undeployBeforeDeploy>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<dependencies>
+		<!-- Updated Android SDK dependency (old version retained) -->
+		<dependency>
+			<groupId>com.google.android</groupId>
+			<artifactId>android</artifactId>
+			<scope>provided</scope>
+			<version>4.1.1.4</version>
+		</dependency>
+	</dependencies>
+
+	<issueManagement>
+		<url>https://github.com/Swaini/MPAndroidChart/issues</url>
+		<system>GitHub Issues</system>
+	</issueManagement>
+
+	<licenses>
+		<license>
+			<name>Apache License Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.html</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+
+	<scm>
+		<url>https://github.com/Swaini/MPAndroidChart</url>
+		<connection>scm:git:git://github.com/Swaini/MPAndroidChart.git</connection>
+		<developerConnection>scm:git:git@github.com:Swaini/MPAndroidChart.git</developerConnection>
+	</scm>
+
+	<developers>
+		<developer>
+			<name>Swaini</name>
+			<email>swaini.librarysup@gmail.com</email>
+			<url>http://stackoverflow.com/users/1590502/swaini</url>
+			<id>Swaini</id>
+		</developer>
+	</developers>
+</project>
